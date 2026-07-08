@@ -66,3 +66,11 @@ jobs:
       - name: Deploy to Coolify
         run: |
           curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
+      
+      - name: Trigger docs rebuild
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.DOCS_REPO_PAT }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/DiscordHubDev/dchubs-api-docs/dispatches \
+            -d '{"event_type":"openapi-updated"}'
