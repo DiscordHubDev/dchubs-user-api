@@ -39,8 +39,8 @@ jobs:
       - name: Create GitHub Release Page
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: v${{ steps.bump_step.outputs.new_version }}
-          name: Release v${{ steps.bump_step.outputs.new_version }}
+          tag_name: v${{ steps.bump_step.outputs.current-version }}
+          name: Release v${{ steps.bump_step.outputs.current-version }}
           generate_release_notes: true
           draft: false
           prerelease: false
