@@ -8,7 +8,7 @@ from utils.jwt import validate_access_token
 router = APIRouter(tags=["UserInfo"])
 
 
-@router.get("/", summary="取得使用者資訊", response_model=UserResponse)
+@router.get("/", summary="獲取基本資訊", response_model=UserResponse)
 async def get_user_info(session: SessionDep, token_claims: dict = Depends(validate_access_token)):
     user_id: str = token_claims.get("sub", "")
 

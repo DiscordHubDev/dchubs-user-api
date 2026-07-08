@@ -26,7 +26,7 @@ router = APIRouter(tags=["Authentication"])
 IS_DEV = settings.app_env == "local"
 
 
-@router.post("/refresh", summary="使用 Refresh Token 換取新 Access 與 Refresh Token")
+@router.post("/refresh", summary="刷新存取令牌")
 async def refresh_token(
     token_claims: dict = Depends(validate_refresh_token),
     redis: aioredis.Redis = Depends(get_redis_client),
