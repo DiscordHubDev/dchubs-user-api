@@ -16,15 +16,15 @@ services:
       - REDIS_URL=redis://redis:6379/0
     depends_on:
       redis:
-        condition: service_healthy  # 確保 redis 完全就緒、通過健康檢查後，web 才啟動
+        condition: service_healthy
     
     # 🟢 新增 FastAPI 的健康檢查
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 10s     # 每 10 秒檢查一次
-      timeout: 5s       # 逾時時間 5 秒
-      retries: 3        # 失敗 3 次才判斷為 unhealthy
-      start_period: 5s  # 容器啟動後的 5 秒緩衝期，期間失敗不計入
+      interval: 10s
+      timeout: 5s    
+      retries: 3
+      start_period: 5s
 
   redis:
     image: redis:7-alpine
