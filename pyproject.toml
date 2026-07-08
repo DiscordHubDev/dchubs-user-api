@@ -86,7 +86,7 @@ possibly-missing-attribute = "error"
 [tool.ruff]
 line-length = 100
 fix = true
-extend-per-file-ignores = {"models/*.py" = ["UP037"]}
+extend-per-file-ignores = {"models/*.py" = ["UP037"], "db/__init__.py" = ["F403", "TID252"]}
 
 [tool.ruff.lint]
 select = [

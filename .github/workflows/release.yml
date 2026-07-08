@@ -1,0 +1,68 @@
+name: Manual Trigger Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Choose the type of version bump: patch, minor, or major'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  execute-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Bump version
+        id: bump_step
+        uses: callowayproject/bump-my-version@master
+        env:
+          BUMPVERSION_COMMIT: "true"
+          BUMPVERSION_TAG: "true"
+        with:
+          args: ${{ inputs.bump_type }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release Page
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.bump_step.outputs.new_version }}
+          name: Release v${{ steps.bump_step.outputs.new_version }}
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+      
+      - name: Log in to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          file: Dockerfile
+          platforms: linux/amd64
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:v${{ steps.bump_step.outputs.new_version }}
+
+      - name: Deploy to Coolify
+        run: |
+          curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
