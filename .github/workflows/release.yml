@@ -54,5 +54,5 @@ jobs:
           curl -X POST \
             -H "Authorization: token ${{ secrets.DOCS_REPO_PAT }}" \
             -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/DiscordHubDev/dchubs-api-docs/dispatches \
+            https://api.github.com/repos/DiscordHubDev/api-docs/dispatches \
             -d '{"event_type":"openapi-updated"}'
