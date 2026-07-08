@@ -1,5 +1,5 @@
 [tool.bumpversion]
-current_version = "0.1.0-rc.1"  # 這裡舉例目前的版號
+current_version = "0.1.0"  # 這裡舉例目前的版號
 # parse 增加了可以用來辨識 -alpha.1, -beta.2, -rc.1 的正規表示式
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(?:-(?P<stage>alpha|beta|rc)\\.(?P<build>\\d+))?"
 serialize = [
