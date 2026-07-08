@@ -57,4 +57,9 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.DOCS_REPO_PAT }}" \
             -H "X-GitHub-Api-Version: 2026-03-10" \
             https://api.github.com/repos/DiscordHubDev/api-docs/dispatches \
-            -d '{"event_type":"openapi-updated"}'
+            -d '{
+              "event_type": "openapi-updated",
+              "client_payload": {
+                "version": "${{ steps.bump_step.outputs.current-version }}"
+              }
+            }'
