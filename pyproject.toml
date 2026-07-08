@@ -1,14 +1,21 @@
 [project]
 name = "dchubs-api"
-dynamic = ["version"]
+version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "asyncpg>=0.31.0",
     "fastapi[standard]>=0.139.0",
+    "psycopg2-binary>=2.9.12",
     "pyjwt>=2.13.0",
     "python-dotenv>=1.2.2",
+    "redis>=8.0.1",
+    "sqlacodegen>=4.0.4",
+    "sqlmodel>=0.0.39",
+    "uvicorn[standard]>=0.50.2",
 ]
+
 
 
 [build-system]
@@ -26,7 +33,7 @@ plugins = ["pydantic.mypy"]
 strict = true
 
 [tool.pytest.ini_options]
-pythonpath = ["."]
+pythonpath = [".", "app"]
 minversion = "9.0"
 addopts = [
     "--strict-config",
@@ -79,6 +86,7 @@ possibly-missing-attribute = "error"
 [tool.ruff]
 line-length = 100
 fix = true
+extend-per-file-ignores = {"models/*.py" = ["UP037"]}
 
 [tool.ruff.lint]
 select = [
@@ -99,6 +107,7 @@ ignore = [
     "RUF002"
 ]
 fixable = ["ALL"]
+
 
 [tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all"

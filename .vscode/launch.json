@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "FastAPI: dev",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "fastapi",
+            "args": [
+                "dev",
+                "main.py",
+            ],
+            "jinja": true,
+        },
+        {
+            "name": "FastAPI: run (production)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "fastapi",
+            "args": [
+                "run",
+                "main.py",
+            ],
+            "jinja": true,
+        }
+    ]
+}
