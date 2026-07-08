@@ -45,24 +45,6 @@ jobs:
           draft: false
           prerelease: false
       
-      - name: Log in to GitHub Container Registry (GHCR)
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          file: Dockerfile
-          platforms: linux/amd64
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:v${{ steps.bump_step.outputs.new_version }}
-
       - name: Deploy to Coolify
         run: |
           curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
