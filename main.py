@@ -33,6 +33,12 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+
+@app.get("/health", status_code=200)
+async def health_check():
+    return {"status": "healthy"}
+
+
 app.include_router(v1_router, prefix="/api/v1")
 
 if __name__ == "__main__":
